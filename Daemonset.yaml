@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: traffic-capturer
+  labels:
+    app: traffic-capturer
+spec:
+  selector:
+    matchLabels:
+      app: traffic-capturer
+  template:
+    metadata:
+      labels:
+        app: traffic-capturer
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+        - name: traffic-capturer
+          image: your-dockerhub-username/traffic-capturer:latest
+          securityContext:
+            capabilities:
+              add: ["NET_ADMIN", "NET_RAW"]
+          volumeMounts:
+            - name: logs
+              mountPath: /logs
+      volumes:
+        - name: logs
+          hostPath:
+            path: /var/log/traffic-capture
+            type: DirectoryOrCreate
