@@ -17,7 +17,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: traffic-capturer
-          image: your-dockerhub-username/traffic-capturer:latest
+          image: pallavisaxena0245/traffic-capturer:latest
           securityContext:
             capabilities:
               add: ["NET_ADMIN", "NET_RAW"]
